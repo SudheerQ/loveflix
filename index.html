@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sanjay ❤️ Firdose</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  color: red;
+  z-index: 100;
+  animation: fadeOut 3s forwards 2s;
+}
+@keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+
+/* HEADER */
+.header {
+  padding: 20px;
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
+}
+
+/* HERO */
+.hero {
+  height: 80vh;
+  background: url('main.jpg') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  backdrop-filter: blur(2px);
+}
+
+.hero h1 { font-size: 45px; }
+
+.btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* TIMER */
+.timer {
+  text-align: center;
+  padding: 20px;
+  font-size: 22px;
+}
+
+/* ROW */
+.row {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.row img {
+  width: 180px;
+  margin-right: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.row img:hover { transform: scale(1.1); }
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+.modal img { width:80%; border-radius:10px; }
+.modal p { margin-top:15px; }
+
+/* SECRET */
+#secret {
+  display:none;
+  text-align:center;
+  padding:30px;
+  font-size:20px;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  bottom:0;
+  font-size:20px;
+  animation: floatUp 5s linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1;}
+  100% { transform: translateY(-800px); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">LOVEFLIX</div>
+
+<div class="header">Sanjay ❤️ Firdose</div>
+
+<div class="hero">
+  <h1>Our Story</h1>
+  <p>4 years of love ♾️</p>
+  <button class="btn" onclick="playMusic()">▶ Play Our Song</button>
+  <button class="btn" onclick="unlockSecret()">🔐 Secret</button>
+</div>
+
+<div class="timer" id="timer"></div>
+
+<div class="row">
+  <img src="img1.jpg" onclick="openModal(this,'Our first memory ❤️')">
+  <img src="img2.jpg" onclick="openModal(this,'You make me happiest 😄')">
+  <img src="img3.jpg" onclick="openModal(this,'My favorite place = with you')">
+  <img src="img4.jpg" onclick="openModal(this,'Forever starts here ♾️')">
+</div>
+
+<div id="secret">
+  💌 I don’t say it enough…  
+  but you’re the best thing that ever happened to me.  
+  I’d choose you in every lifetime ❤️
+</div>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <img id="modalImg">
+  <p id="modalText"></p>
+</div>
+
+<audio id="song" src="perfect.mp3"></audio>
+
+<script>
+// MUSIC
+function playMusic() {
+  document.getElementById("song").play();
+}
+
+// TIMER (CHANGE DATE)
+const start = new Date("2022-04-18");
+const now = new Date();
+
+let years = now.getFullYear() - start.getFullYear();
+let months = now.getMonth() - start.getMonth();
+let days = now.getDate() - start.getDate();
+
+if (days < 0) { months--; days += 30; }
+if (months < 0) { years--; months += 12; }
+
+document.getElementById("timer").innerText =
+`Together for ${years} years, ${months} months, ${days} days ❤️`;
+
+// HEARTS
+function createHeart() {
+  const h = document.createElement("div");
+  h.classList.add("heart");
+  h.innerText = "❤️";
+  h.style.left = Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(createHeart, 400);
+
+// MODAL
+function openModal(img,text){
+  document.getElementById("modal").style.display="flex";
+  document.getElementById("modalImg").src = img.src;
+  document.getElementById("modalText").innerText = text;
+}
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+// SECRET
+function unlockSecret(){
+  const pass = prompt("Enter our special word ❤️");
+  if(pass && pass.toLowerCase() === "love"){
+    document.getElementById("secret").style.display="block";
+  } else {
+    alert("Wrong ❤️ try again");
+  }
+}
+</script>
+
+</body>
+</html>
